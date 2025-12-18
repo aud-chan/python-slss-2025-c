@@ -4,6 +4,7 @@
 
 
 import random
+from tkinter import YES
 
 class Pokemon:
     def __init__(self):
@@ -39,6 +40,48 @@ class Pokemon:
         """Make the pokemon dance"""
         print(f"{self.name} is doing a {self.move}")
 
+class Squirtle(Pokemon):
+    def __init__(self):
+        # Call the constructor of Pokemon
+        super().__init__()
+        self.name = "Squirtle"
+        self.species = "Squirtle"
+        self.type = "water"
+
+    def water_gun(self):
+        """Squirtle shoots water out of its mouth"""
+        print(f"{self.name} used water gun!")
+
+
+class Pikachu(Pokemon):
+    def __init__(self):
+        # Call the constructor of Pokemon
+        super().__init__()
+        self.name = "Pikachu"
+        self.species = "Pikachu"
+        self.type = "electric"
+
+    def thunder_bolt(self):
+        """Pikachu throws out a thunderbolt"""
+        thunder_bolt = input("Do you want Pikachu to throw a thunderbolt?")
+        if thunder_bolt == "yes":
+            print(f"{self.name} threw a thunderbolt!")
+        else:
+            print("Waiting for next move")
+
+
+    def quick_attack(self):
+        """Pikachu attacks you"""
+        quick_attack = input("Do you want Pikachu to do a quick attack?")
+        if  quick_attack == "yes":
+            print(f"{self.name} threw an attack!")
+        else:
+            print("Waiting for next move")
+
+
+
+
+
 if __name__ == "__main__":
     # create a pokemon object
     pokemon_one = Pokemon()
@@ -70,3 +113,13 @@ if __name__ == "__main__":
 
     pokemon_one.dance()
     pokemon_two.dance()
+
+    squirtle_one = Squirtle()
+    # use .water_gun()
+    squirtle_one.water_gun()
+    # use .talk()
+    squirtle_one.talk()
+
+    pikachu_one = Pikachu()
+    pikachu_one.thunder_bolt()
+    pikachu_one.quick_attack()
