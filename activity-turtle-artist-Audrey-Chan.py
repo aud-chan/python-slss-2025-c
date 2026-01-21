@@ -106,7 +106,7 @@ def draw_city (x: int, y: int):
 
     t.goto(115 + x, -580 + y)
     for _ in range(4):
-        for _ in range (4):
+        for _ in range (4)
             t.pendown()
             t.forward(70)
             t.right(90)

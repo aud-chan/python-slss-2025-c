@@ -3,7 +3,6 @@
 # 20 October
 
 # Create a function that draws trees recursively
-from ssl import ALERT_DESCRIPTION_RECORD_OVERFLOW
 import turtle
 wn = turtle.Screen()
 t = turtle.Turtle()
@@ -13,6 +12,14 @@ t.goto(0,-200)
 t.color("brown")
 t.width(8)
 t.shape("arrow") # leaf shape
+
+#  create a dictionary of leaf colours
+LEAF_COLOURS = {
+    "spring": "#efc3e6",
+    "summer": "#4da167",
+    "autumn": "#d36135",
+    "winter": "#ddfff7",
+}
 
 def draw_tree(level: int, branch_length: float):
     """Draw a tree rcursively at a given level.
@@ -35,7 +42,8 @@ def draw_tree(level: int, branch_length: float):
         t.backward(branch_length)
     else:
         # create a leaf
-        t.color("green")
+        t.color(LEAF_COLOURS["spring"])
+        # t.color("#efc3e6") - harder to read
         t.stamp()
         t.color("brown")
 
@@ -62,7 +70,7 @@ def draw_complicated_tree(level: int, branch_length: float):
         t.left(47)
         t.backward(branch_length)
         # branch straight up
-    else:
+    else: # base case
         # create a leaf
         t.color("green")
         t.stamp()
@@ -83,9 +91,7 @@ def fib(num: int) -> int:
         return fib(num - 2) + fib(num - 1)
     else:
         return 1
-print(fib(8))
-
-
+# print(fib(8))
 
 
 # print(factorial(1))   # 1
@@ -94,4 +100,5 @@ print(fib(8))
 
 
 # draw_complicated_tree(3,80)
+draw_tree(3,100)
 wn.exitonclick()

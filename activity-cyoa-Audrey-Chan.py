@@ -66,7 +66,7 @@ if mountain_forest == "mountain":
         print("You were teleported to the finish line. You passed!")
         sys.exit
 
-elif fly_or_walk == "walk":
+    elif fly_or_walk == "walk":
         print( "You take the safer option and run down at full speed but glance at the map")
         time.sleep(2)
         print("There's still one stop left before you reach the house.")
@@ -75,13 +75,13 @@ elif fly_or_walk == "walk":
         time.sleep(2)
         print("A crossroad in front of you leads left or right.")
         time.sleep(2)
-    left_or_right = input("left or right?")
-    if left_or_right == "left":
-        print("You see the house but time is up.")
-        sys.exit
-    elif left_or_right == "right":
-        print("You were teleported to the finish line. You passed!")
-        sys.exit
+        left_or_right2 = input("left or right?")
+        if left_or_right2 == "left":
+            print("You see the house but time is up.")
+        # sys.exit
+        # elif left_or_right2 == "right":
+        # print("You were teleported to the finish line. You passed!")
+        #     sys.exit
 
 elif mountain_forest == "forest":
     print("You head towards the forest and brush past the trees.")

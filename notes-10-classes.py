@@ -79,7 +79,15 @@ class Pikachu(Pokemon):
             print("Waiting for next move")
 
 
-
+class Mew(Pokemon):
+    def __init__(self):
+        # Call the constructor of Pokemon
+        super().__init__()
+        self.name = "Mew"
+        self.type = "Psychic"
+        self.species = "Mew"
+        self.level = 1
+        self.age = 0
 
 
 if __name__ == "__main__":
@@ -104,6 +112,7 @@ if __name__ == "__main__":
     if type(pokemon_one) is Pokemon:
        print(f"{pokemon_one.name} is a Pokemon")
 
+
     # tell our pokemon to talk
     pokemon_one.talk()
     pokemon_two.talk()
@@ -123,3 +132,8 @@ if __name__ == "__main__":
     pikachu_one = Pikachu()
     pikachu_one.thunder_bolt()
     pikachu_one.quick_attack()
+
+    # Create a Mew object
+    pokemon_three = Mew()
+    pokemon_three.talk()
+    pokemon_three.stats()

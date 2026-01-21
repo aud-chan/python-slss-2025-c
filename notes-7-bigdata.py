@@ -8,6 +8,9 @@
 
 
 
+from random import choice
+
+
 def main():
     # Get the file
     path = "data/sfu_best_cmpt120.csv"
@@ -43,24 +46,47 @@ def main():
     # for line in file:
     #     print(line)
 
-    mbc = 0
-    cornerstone = 0
+    # mbc = 0
+    # cornerstone = 0
+
+    # for line in file:
+    #     info = line.split(",")
+    #     fav_burrito = info[5]
+    #     if fav_burrito == " Guadelupe (MBC)":
+    #         mbc += 1
+    #     elif fav_burrito == "Quesada (Cornerstone)":
+    #         cornerstone += 1
+
+    # if cornerstone > mbc:
+    #     print("The most popular burrito place is Quesada (Cornerstone).")
+    # elif mbc > cornerstone:
+    #     print("The most popular burrito place is Guadelupe (MBC).")
+    # elif mbc == cornerstone:
+    #     print("It's a tie!")
+
+    natures_garden = 0
+    chopped_leaf = 0
+    subway = 0
+    veggie_lunch = 0
+    steve_poke_bar = 0
 
     for line in file:
         info = line.split(",")
-        fav_burrito = info[5]
-        if fav_burrito == " Guadelupe (MBC)":
-            mbc += 1
-        elif fav_burrito == "Quesada (Cornerstone)":
-            cornerstone += 1
+        healthy_food = info[-1].lower().strip()
 
-    if cornerstone > mbc:
-        print("The most popular burrito place is Quesada (Cornerstone).")
-    elif mbc > cornerstone:
-        print("The most popular burrito place is Guadelupe (MBC).")
-    elif mbc == cornerstone:
-        print("It's a tie!")
+    if   healthy_food == "nature's garden":
+        natures_garden += 1
+    elif healthy_food == "chopped leaf":
+        chopped_leaf += 1
+    elif healthy_food == "subway":
+         subway += 1
+    elif healthy_food == "veggie lunch":
+        veggie_lunch += 1
+    elif healthy_food == "steve's poke bar":
+        steve_poke_bar += 1
 
+    print("-----------------")
+    print("Results: ")
 
 
 

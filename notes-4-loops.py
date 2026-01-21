@@ -5,6 +5,7 @@
 
 
 import turtle
+import random
 
 window = turtle.Screen()  # Set up the window and its attributes
 window.bgcolor("lightblue")
@@ -34,35 +35,54 @@ mike.color("white") # colour
 # mike.circle(20)
 # mike.shapesize(1)
 
-# Make 100 cookies
-for counter in range(100):
-    counter = counter * 50
-
+# create a function to make cookies
+def make_cookies(x:int, y:int):
 # Cookie Making
 # Set the colour of our choco chip cookie
     mike.color("brown")
 # Draw a circle to represent our cookie
     mike.shapesize(0.5)
     mike.pu()
-    mike.setheading(0) #mike points east
-    mike.goto(-5 + counter, -30 + counter)
+    mike.setheading(0) # mike points east
+    mike.goto(-5 + x, -30 + y) # every goto needs a + counter
     mike.pd()
     mike.circle(30)
     # Put a chocolate chip at the top-right
     mike.pu()
-    mike.goto(10 + counter,10 + counter)
+    mike.goto(10 + x,10 + y)
     mike.stamp()
     # Put a chocolate chip at the bottom-right
-    mike.goto(10 + counter,-10 + counter)
+    mike.goto(10 + x,-10 + y)
     mike.stamp()
     # Put a choco chip at the bottom-left
     mike.pd()
-    mike.goto(-10 + counter,10 + counter)
+    mike.goto(-10 + x,10 + y)
     mike.stamp()
     # Choco chip at the top-left
-    mike.goto(0 + counter ,0 + counter)
+    mike.goto(0 + x ,0 + y)
     mike.stamp()
-    mike.goto(-10 + counter,-10 + counter)
+    mike.goto(-10 + x,-10 + y)
     mike.stamp()
 
+    # Make cookies randomly on the screen
+    # make 500 of them
+    for _ in range(500):
+        x = random.randrange(-500,500)
+        y = random.randrange(500,500)
+        mike.speed(0)
+        make_cookies(x, y)
+# # make cookies in a diagonal line
+make_cookies(0,0) # origin
+make_cookies(100,100) # (100,100)
+make_cookies(-100,-100)
+make_cookies(-100,100)
+make_cookies(100,-100)
+
+# make cookies in an x
+for counter in range(50):
+    counter = counter * 50
+    make_cookies(-counter, -counter) # need all 4 quadrants (-,- +,- +,+ -,+)
+    make_cookies(counter, -counter)
+    make_cookies(-counter, counter)
+    make_cookies(counter, counter)
 window.exitonclick()
