@@ -3,8 +3,7 @@
 # Date:
 
 import random
-from shutil import move
-
+import sys
 import pygame
 
     # COLOURS - (R, G, B)
@@ -49,23 +48,46 @@ class MoveBlock(pygame.sprite.Sprite):
         self.image = pygame.Surface((20,15))
         self.image.fill(RED)
         self.rect = self.image.get_rect()
-        self.rect.centerx = 0
-        self.rect_centery = 0
 
-        self.point_value = 1
+        self.vel_x = 0
+        self.vel_y = 0
 
-        def level_up(self, val: int):
-            self.point_value *= val
+    def update(self):
+        # movement in the x-axis
+        self.rect.x += self.vel_x
+        # movement in the y-axis
+        self.rect.y += self.vel_y
+        # randomize movement
+        # self.last_x = self.rect.x
 
-        self.vel_x = 1
-        self.vel_y = 1
 
-        def update(self):
-            # movement in the x-axis
-            self.rect.x += self.vel_x
-            # movement in the y-axis
-            self.rect.y += self.vel_y
-            # randomize movement
+
+
+class Coin(pygame.sprite.Sprite):
+    """Coin dropper"""
+
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("assets/coins.png")
+        self.image = pygame.transform.scale_by(self.image, 0.1)
+        self.rect = self.image.get_rect()
+
+        self.vel_x = 0
+        self.vel_y = 0
+
+
+        # def collect_moving(self, amt: int):
+        #     self.moving_collected += amt
+
+    def update(self):
+          # movement in the x-axis
+          self.rect.x += self.vel_x
+          # movement in the y-axis
+          self.rect.y += self.vel_y
+          # randomize movement
+
+
+
 
 class Mario(pygame.sprite.Sprite):
 
@@ -85,6 +107,7 @@ class Mario(pygame.sprite.Sprite):
         # Mario's life
         self.health = 100
         self.points = 0
+        self.coins_collected = 0
 
     def decrease_health(self, mag: int) -> float:
         self.health -= mag
@@ -93,8 +116,17 @@ class Mario(pygame.sprite.Sprite):
     def increase_score(self, amt: int):
         self += amt
 
+    def collect_coins(self, amt: int):
+        self.coins_collected += amt
+
+    # def collect_moving(self, amt: int):
+    #     self.moving_collected += amt
+
     def show_health_percentage(self) -> float:
         return self.health / 100
+
+    def move_block(self, amt:int):
+        self.collected_blocks += amt
 
 
     def update(self):
@@ -125,10 +157,9 @@ class Enemy(pygame.sprite.Sprite):
         self.vel_y = 0
 
         self.damage = 1
-        def level_up(self):
-            # increase damage
-            self.damage *= 2
-
+    def level_up(self):
+        # increase damage
+        self.damage *= 2
 
     def update(self):
           # movement in the x-axis
@@ -163,10 +194,13 @@ def game():
     done = False
     clock = pygame.time.Clock()
     num_enemies = 3
-    num_blocks = 75
+    num_blocks = 50
     num_blocks_2 = 2
     healthbar = HealthBar()
     level = 1
+    coins = 5
+    move_block = 3
+    font = pygame.font.SysFont("Arial", 30)
 
     block_one = Block()
     block_one.rect.centerx = WIDTH / 2
@@ -177,6 +211,7 @@ def game():
     block_sprite_group = pygame.sprite.Group()
     enemy_sprites_group = pygame.sprite.Group()
     move_sprite_group = pygame.sprite.Group()
+    coin_sprites_group = pygame.sprite.Group()
     # create a player sprite
     player = Mario()
     # place Mario in the middle of the screen
@@ -216,14 +251,27 @@ def game():
         move_block = MoveBlock()
         # randomize the position at bottom left
         move_block.rect.centerx = random.randrange(0,WIDTH)
-        move_block.rect.centery = random.randrange(0, HEIGHT)
+        move_block.rect.centery = random.randrange(500, HEIGHT)
         # move the block
         move_block.vel_x = random.choice([-3, -2, -1, 1, 2, 3])
         move_block.vel_y = random.choice([-3, -2, -1, 1, 2, 3])
+        # add to group
         all_sprites_group.add(move_block)
         move_sprite_group.add(move_block)
 
+    # todo: wait 3 seconds before spawning again
 
+    for _ in range(coins):
+        coin_one = Coin()
+        # wait 3 seconds before spawning again
+        # initial position
+        random_x = random.choice([100,200,300,400,500])
+        random_y = HEIGHT
+        # make coins drop
+
+        coin_one.vel_y = random.choice([1, 2, 2, 3, 3, 3])
+        all_sprites_group.add(coin_one)
+        coin_sprites_group.add(coin_one)
 
     # ------------ MAIN GAME LOOP
     while not done:
@@ -250,7 +298,7 @@ def game():
 
         for move_block in move_sprite_group:
             if move_block.rect.left < 0 or move_block.rect.right > WIDTH:
-                    move_block.vel_x = -move_block.vel_x
+                move_block.vel_x = -move_block.vel_x
         for move_block in move_sprite_group:
             if move_block.rect.top < 0 or move_block.rect.bottom > HEIGHT:
                 move_block.vel_y = -move_block.vel_y
@@ -262,10 +310,19 @@ def game():
             print("------")
             print("Mario has collided with a block")
             print(blocks_collided)
+
         blocks_collided = pygame.sprite.spritecollide(player, move_sprite_group, True)
         if blocks_collided:
+            print("------")
+            print("Moving Block Collected!")
             print(blocks_collided)
 
+
+        # If Mario collides with a coin, increase the coins_collected property
+        coins_collided = pygame.sprite.spritecollide(player, coin_sprites_group, True)
+        for coin in coins_collided:
+            player.collect_coins(1)
+            print(player.coins_collected)
 
         # Mario collides with enemy
         enemies_collided = pygame.sprite.spritecollide(player, enemy_sprites_group, False)
@@ -305,12 +362,18 @@ def game():
         # draw all the sprites
         all_sprites_group.draw(screen)
         screen.blit(healthbar, (5,5))
+        coins_text = font.render(f"Coins: {player.coins_collected}", True, BLACK)
+        screen.blit(coins_text, (WIDTH - 200, 5))
+        blocks_text = font.render(f"Blocks: {blocks_collided}", True, BLACK)
+        screen.blit(blocks_text, (WIDTH - 200, 38))
 
         # Update screen
         pygame.display.flip()
 
         # ------ CLOCK TICK
         clock.tick(60) # 60 fps
+        if block_sprite_group == 0:
+            sys.exit
 
     pygame.quit()
 
