@@ -268,7 +268,7 @@ def game():
         random_x = random.choice([100,200,300,400,500])
         random_y = HEIGHT
         # make coins drop
-
+        coin_one.vel_x = random.choice([1, 2, 2, 3, 3, 3])
         coin_one.vel_y = random.choice([1, 2, 2, 3, 3, 3])
         all_sprites_group.add(coin_one)
         coin_sprites_group.add(coin_one)
