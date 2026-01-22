@@ -1,0 +1,47 @@
+# Weekly Journal
+23 October 2025
+Audrey Chan
+
+## Recursion
+
+***Please use your brain for these, no LLMs. I'm not looking for right answers, just your answers.***
+
+> There are two things that you need to make a recursive function.
+> What are those two things?
+
+`def` and `if` and `else` and `level-1`
+
+ > Why is this a recursive definition?
+> 	![From Archive.org](https://web.archive.org/web/20180710012425im_/http://assets.amuniversal.com/d4ec32609f70012f2fe600163e41dd5b)
+
+This is recursive because it uses the previous answer to figure out what the next one is. It is a repeating sequence. 
+
+> Consider the function below. How many times will it call itself not including the initial function call?
+> (It's poorly documented on purpose.)
+
+```python
+def some_recursive_function(int):
+	if num > 1:
+		return num + some_recursive_function(num-1)
+	else:
+		return 0
+
+result = some_recursive_function(10)
+```
+
+The function will call itself 9 times. 
+
+
+## Closing Questions
+
+![](https://preview.redd.it/recursionquestion-v0-6i9x1wlfyxuf1.jpeg?width=320&crop=smart&auto=webp&s=c64dae05bef67ff2f70c9c449c7c2ddbfc6a17bc)
+
+[I finally understood Recursion.](https://www.reddit.com/r/ProgrammerHumor/comments/12q3kbk/i_finally_understood_recursion/)
+
+> What emoji best describes how you feel in this class this week? Explain why you chose this one.
+
+🙌🏻 - Yay another long weekend! 
+
+> What plans do you have this weekend?
+
+Lots of sleep, and study for a test coming up next week. 
